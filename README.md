@@ -1,73 +1,111 @@
-# README: Classification Pipeline for Text Data
+# Project ML: Comparing Gemini Flash and Flash8B Models
 
 ## Overview
-This project implements a machine learning pipeline to classify text data into three categories: `-1` (UNCLEAR), `0` (REJECT), and `1` (BYPASS). The pipeline processes input data, handles class imbalances, trains multiple models, and evaluates their performance to identify the best-performing model for text classification tasks.
+
+This project implements a machine learning pipeline to compare the performance of two text classification models: **Gemini Flash** and **Gemini Flash8B**. Both models classify text data into three categories:
+
+- `-1` (UNCLEAR): Text that lacks clarity or is ambiguous.
+- `0` (REJECT): Text that should be flagged or rejected.
+- `1` (BYPASS): Text that is acceptable and passes the classification criteria.
+
+The pipeline processes input text, classifies the responses using both models, and generates insights into their performance through visualizations and summary statistics.
+
+## Purpose
+
+The primary objective of this project is to compare the classification results of the Gemini Flash and Flash8B models. By analyzing the distribution of predictions across various datasets, users can:
+
+1. Understand the strengths and weaknesses of each model.
+2. Identify trends in classification performance.
+3. Make informed decisions on which model to use for specific applications.
 
 ## Workflow
 
 ### 1. **Dataset Preparation**
-- The training data (`train.csv`) contains two columns:
-  - `target`: The text data to be classified.
-  - `label`: The ground truth labels for classification (`-1`, `0`, `1`).
-- The dataset is preprocessed to clean and standardize the text before being split into training and validation sets.
+
+- Input files are stored in two folders:
+  - `gemini_flash_response`: Contains text responses to be classified by the Gemini Flash model.
+  - `gemini_flash-8b_response`: Contains text responses to be classified by the Gemini Flash8B model.
+- Each folder contains multiple CSV files, one for each language, with a column named `response_english` holding the text data to classify.
 
 ### 2. **Text Preprocessing**
+
+To standardize the input data, the following preprocessing steps are applied:
+
 - Special characters and digits are removed using regular expressions.
-- Text is converted to lowercase and tokenized into words.
-- Stopwords are removed using the NLTK library.
-- Words are reduced to their root forms using stemming (`PorterStemmer`).
+- Text is converted to lowercase and tokenized into individual words.
+- Common stopwords (e.g., "the", "and", "is") are removed using the NLTK library.
+- Words are stemmed using the Porter Stemmer to reduce them to their root forms.
 
-### 3. **TF-IDF Vectorization**
-- Text data is transformed into numerical features using the **TF-IDF (Term Frequency-Inverse Document Frequency)** technique.
-- Bi-gram features are extracted (`ngram_range=(1, 2)`), and the number of features is limited to 5000 for efficiency.
+### 3. **Classification**
 
-### 4. **Handling Class Imbalance**
-- Class imbalances in the training data are mitigated using **SMOTE (Synthetic Minority Over-sampling Technique)** to generate synthetic samples for underrepresented classes.
+- Both models (Gemini Flash and Gemini Flash8B) are trained on separate datasets and saved as `best_model.pkl`.
+- A pre-trained TF-IDF vectorizer (`vectorizer.pkl`) is used to convert text into numerical features.
+- For each folder, the responses are classified, and the results are saved:
+  - Classified files are stored in a `classified` subfolder within each response folder.
+  - A summary file containing the distribution of labels (`-1`, `0`, `1`) for each language is saved as:
+    - `classification_flash_results_summary.csv` (for Gemini Flash)
+    - `classification_flash8b_results_summary.csv` (for Gemini Flash8B)
 
-### 5. **Model Training and Validation**
-Four machine learning models are trained and evaluated:
-- **K-Nearest Neighbors (K-NN)**
-- **Decision Tree**
-- **Logistic Regression**
-- **Neural Network (MLPClassifier)**
+### 4. **Visualization and Comparison**
 
-Each model is trained on the resampled training data and evaluated on the validation set using metrics:
-- Precision
-- Recall
-- F1-score
-- Accuracy
-
-The best-performing model is selected based on the weighted average F1-score.
-
-### 6. **Test Predictions**
-- A test dataset (`test.csv`) is preprocessed similarly to the training data.
-- The best model is used to predict labels for the test dataset.
-- The output contains two columns:
-  - `target`: The preprocessed text data.
-  - `label`: The predicted class for each text sample.
-- Predictions are saved to `results.csv`.
-
-### 7. **Model Saving**
-- The best-performing model and the TF-IDF vectorizer are saved using `joblib` for reuse in future predictions.
+- Results for both models are visualized using stacked bar charts:
+  - Each language is represented along the x-axis.
+  - Bars show the count and percentage of predictions for each class (`-1`, `0`, `1`).
+  - Separate graphs are generated for Gemini Flash and Gemini Flash8B.
+- The charts provide an intuitive comparison of how the two models classify text across languages.
 
 ## Files
-- `train.csv`: Training dataset containing `target` and `label` columns.
-- `test.csv`: Test dataset to evaluate the model on unseen data.
-- `results.csv`: Output file containing the predicted labels for the test dataset.
-- `best_model.pkl`: Saved best model.
-- `vectorizer.pkl`: Saved TF-IDF vectorizer.
 
-## Results
-The models achieved perfect scores (precision, recall, F1-score, and accuracy) on the validation set. However, further steps, such as using a more complex test set or performing cross-validation, are recommended to ensure robustness and avoid overfitting.
+- **Model and Vectorizer**:
+  - `best_model.pkl`: The trained classification model.
+  - `vectorizer.pkl`: The TF-IDF vectorizer used for text preprocessing.
+- **Input Files**:
+  - `gemini_flash_response/`: Contains text responses for the Gemini Flash model.
+  - `gemini_flash-8b_response/`: Contains text responses for the Gemini Flash8B model.
+- **Output Files**:
+  - `classified/`: Subfolder containing classified responses for each language.
+  - `classification_flash_results_summary.csv`: Summary of results for Gemini Flash.
+  - `classification_flash8b_results_summary.csv`: Summary of results for Gemini Flash8B.
 
 ## How to Run
+
+### Prerequisites
+
 1. Install required dependencies:
    ```
-   pip install numpy pandas scikit-learn imbalanced-learn nltk joblib
+   pip install numpy pandas scikit-learn nltk matplotlib joblib
    ```
-2. Run the Python script to train models and generate predictions:
-   ```
-   python main.py
-   ```
-3. Check `results.csv` for the classification results on the test dataset.
+2. Ensure that input files are organized into the folders `gemini_flash_response/` and `gemini_flash-8b_response/`.
 
+### Steps
+
+1. **Classify Responses**:
+   - Run the classification script for both models:
+     ```
+     python classify_flash.py  # For Gemini Flash
+     python classify_flash8b.py  # For Gemini Flash8B
+     ```
+2. **Generate Visualizations**:
+   - Run the visualization script to compare results:
+     ```
+     python compare_graph.py
+     ```
+3. **Analyze Results**:
+   - Review the classification summaries (`classification_flash_results_summary.csv` and `classification_flash8b_results_summary.csv`).
+   - Compare the stacked bar charts to identify differences in performance between the models.
+
+## Results
+
+- The project generates classified response files for each model.
+- Summaries provide counts and percentages of each class (`-1`, `0`, `1`) by language.
+- Visualizations highlight differences in classification patterns between Gemini Flash and Flash8B.
+
+## Insights
+
+Through this project, users can:
+
+1. Identify languages or datasets where one model outperforms the other.
+2. Evaluate consistency in predictions across different languages.
+3. Make data-driven decisions on which model to deploy for specific applications.
+
+This comparative analysis ensures that the best-performing model is chosen for the desired use case, improving overall classification accuracy and reliability.
