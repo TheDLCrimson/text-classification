@@ -1,4 +1,4 @@
-# README: Security Testing for Large Language Models (LLMs) Against Jailbreak Attacks
+# ProjectML: Security Testing for Large Language Models (LLMs) Against Jailbreak Attacks
 
 ## Overview
 This project focuses on testing the security of large language models (LLMs) like Google's Gemini series, specifically in low-resource languages (LRLs). The study aims to evaluate how well these models handle jailbreak attacks—attempts to bypass safety mechanisms—and identify vulnerabilities in their safety filters. By systematically analyzing Gemini 1.5 Flash, Flash8B, and Pro models, this research provides insights into improving LLM security for diverse and multilingual use cases.
