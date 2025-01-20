@@ -20,7 +20,6 @@ The goal of this project is to:
 ### 2. **Models Tested**
 - **Gemini 1.5 Flash**
 - **Gemini 1.5 Flash8B**
-- **Gemini 1.5 Pro**
 
 ### 3. **Classification Metrics**
 Each response from the model is classified into one of three categories:
