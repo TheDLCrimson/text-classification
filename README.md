@@ -41,12 +41,15 @@ Each response from the model is classified into one of three categories:
 ## Results
 Preliminary results reveal that:
 - **BYPASS Rates**: Certain low-resource languages showed higher bypass rates, indicating vulnerabilities in safety filters.
-- **Model Comparison**: While Flash8B demonstrated improved security over Flash, vulnerabilities still exist, especially in languages with limited training data.
+- **Model Comparison**: While Flash8B is smaller and more compacted than Flash, vulnerabilities is higher, especially in languages with limited training data.
 - **Language Impact**: Low-resource languages were significantly more prone to successful jailbreaks than high-resource ones.
 
 ## Key Insights
 1. **Vulnerabilities in LRLs**: Low-resource languages exhibit higher susceptibility to bypassing safety mechanisms.
-2. **Model Performance**: Flash8B showed better resistance compared to Flash but still fell short in certain scenarios.
+2. **Model Performance**:
+  - Gemini Flash: Higher rejection rates (91.9% in English, 69.6% in Guarani).
+  - Gemini Flash-8B: Higher bypass rates (83.3% in Guarani).
+  - Vulnerabilities persist in low-resource languages."
 3. **Importance of Multilingual Safety**: There is a critical need to improve multilingual safety mechanisms to ensure secure and inclusive LLM applications globally.
 
 ## Conclusion
