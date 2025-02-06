@@ -1,4 +1,4 @@
-# ProjectML: Security Testing for Large Language Models (LLMs) Against Jailbreak Attacks
+# Security Testing for Large Language Models (LLMs) Against Low-resource Languages (LRLs) Jailbreak Attacks
 
 ## Overview
 
