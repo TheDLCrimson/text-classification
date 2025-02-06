@@ -142,4 +142,4 @@ To standardize the input data, the following preprocessing steps are applied:
   - `classification_flash_results_summary.csv`: Summary of results for Gemini Flash.
   - `classification_flash8b_results_summary.csv`: Summary of results for Gemini Flash8B.
 - **Others**:
-  - [Gemini Against LRLs Jailbreak Attacks](https://github.com/TheDLCrimson/text-classification/blob/main/Paper.pdf): The paper describing this project.
+  - [Gemini Against LRLs Jailbreak Attacks](https://github.com/TheDLCrimson/text-classification/blob/902fea4fa196979afbd574f784665e4247c76a8f/Gemini%20Against%20LRLs%20Jailbreak%20Attacks.pdf): The paper describing this project.
